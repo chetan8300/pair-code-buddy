@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation"
 const formSchema = z.object({
   name: z.string().min(3).max(50),
   description: z.string().min(10).max(200),
-  language: z.string().min(1).max(50),
+  tags: z.string().min(1).max(50),
   githubRepo: z.string().min(1).max(100),
 })
 
@@ -35,7 +35,7 @@ const CreateRoomForm = () => {
     defaultValues: {
       name: "",
       description: "",
-      language: "",
+      tags: "",
       githubRepo: "",
     },
   })
@@ -64,7 +64,7 @@ const CreateRoomForm = () => {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="Pair Programming Room" />
               </FormControl>
               <FormDescription>
                 This is your public room name.
@@ -81,7 +81,7 @@ const CreateRoomForm = () => {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea {...field} />
+                <Textarea {...field} placeholder="I am looking for a pair programming buddy to work on a React project." />
               </FormControl>
               <FormDescription>
                 Please describe your room
@@ -93,15 +93,15 @@ const CreateRoomForm = () => {
 
         <FormField
           control={form.control}
-          name="language"
+          name="tags"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Language</FormLabel>
+              <FormLabel>Tags</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="JavaScript, React, Node.js" />
               </FormControl>
               <FormDescription>
-                List the primary programming language used in this repo.
+                List the primary programming languages, libraries, or frameworks (in comma-separated format e.g., JavaScript, React, Node.js)
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -115,7 +115,7 @@ const CreateRoomForm = () => {
             <FormItem>
               <FormLabel>GitHub Repo</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} placeholder="https://github.com/chetan8300/pair-code-buddy" />
               </FormControl>
               <FormDescription>
                 Share your GitHub repo

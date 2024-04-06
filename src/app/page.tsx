@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
+import { TagList } from "@/components/tags-list";
 
 import Link from "next/link";
 import { Room } from "@/db/schema";
@@ -28,6 +29,8 @@ function RoomCard({ room }: { room: Room }) {
             Github Repo
           </Link>
         )}
+
+        <TagList tags={room.tags} />
       </CardContent>
       <CardFooter>
         <Button asChild>

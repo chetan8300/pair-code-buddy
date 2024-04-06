@@ -57,8 +57,8 @@ const Header = () => {
   const session = useSession();
 
   return (
-    <header className="container mx-auto bg-gray-100 dark:bg-gray-900 py-4">
-      <div className="flex justify-between items-center">
+    <header className="bg-gray-100 dark:bg-gray-900 py-4">
+      <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center gap-3 hover:text-blue-900 dark:hover:text-blue-100">
           <Image src="/logo.png" width={50} height={50} alt="Logo" />
           <span className="text-lg font-bold">Pair Code Buddy</span>

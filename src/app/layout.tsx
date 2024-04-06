@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import NextTopLoader from 'nextjs-toploader';
 
 import Providers from "./providers";
 import Header from "./header";
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
+        <NextTopLoader />
         <Providers>
           <Header />
           {children}

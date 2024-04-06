@@ -1,19 +1,59 @@
-import { db } from "@/db";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+
+import Link from "next/link";
+import { Room } from "@/db/schema";
+import { GithubIcon } from "lucide-react";
+import { getRooms } from "@/services/rooms";
+// import { useRouter } from "next/navigation";
+
+function RoomCard({ room }: { room: Room }) {
+  return (
+    <Card className="flex flex-col">
+      <CardHeader>
+        <CardTitle>{room.name}</CardTitle>
+        <CardDescription>{room.description}</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-1">
+        {room.githubRepo && (
+          <Link href={room.githubRepo} className="flex items-center gap-2">
+            <GithubIcon className="h-6 w-6" />
+            Github Repo
+          </Link>
+        )}
+      </CardContent>
+      <CardFooter>
+        <Button asChild>
+          <Link href={`/rooms/${room.id}`}>Join Room</Link>
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
 
 export default async function Home() {
-
-  const rooms = await db.query.room.findMany();
+  // const router = useRouter();
+  const rooms = await getRooms();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-4xl font-bold">Home Page</h1>
+    <main className="min-h-screen p-12">
+      <div className="flex justify-between mb-8">
+        <h1 className="text-4xl font-bold">Find Rooms</h1>
+        <Button asChild>
+          <Link href="/create-room">Create Room</Link>
+        </Button>
+      </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {rooms.map((room) => (
-          <div key={room.id} className="flex items-center gap-4">
-            <div>{room.name}</div>
-            <div>{room.description}</div>
-          </div>
+          <RoomCard key={room.id} room={room} />
         ))}
       </div>
     </main>

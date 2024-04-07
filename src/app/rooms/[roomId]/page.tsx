@@ -2,6 +2,7 @@ import { getRoom } from "@/services/rooms";
 import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { TagList } from "@/components/tags-list";
+import { VideoPlayer } from "./video-player";
 
 type RoomPageProps = {
   params: {
@@ -22,7 +23,7 @@ const RoomPage = async (props: RoomPageProps) => {
     <div className="grid grid-cols-4 min-h-screen container">
       <div className="col-span-3 h-full p-4 pr-2">
         <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4">
-          Video Player
+          <VideoPlayer room={room} />
         </div>
       </div>
       <div className="col-span-1 h-full p-4 pl-2">

@@ -14,7 +14,6 @@ type RoomPageProps = {
 const RoomPage = async (props: RoomPageProps) => {
   const room = await getRoom(props.params.roomId);
 
-
   if (!room) {
     return <div>Room not found</div>;
   }

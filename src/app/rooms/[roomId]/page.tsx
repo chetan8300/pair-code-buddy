@@ -3,6 +3,7 @@ import { GithubIcon } from "lucide-react";
 import Link from "next/link";
 import { TagList } from "@/components/tags-list";
 import { VideoPlayer } from "./video-player";
+import { unstable_noStore } from "next/cache";
 
 type RoomPageProps = {
   params: {
@@ -12,6 +13,7 @@ type RoomPageProps = {
 }
 
 const RoomPage = async (props: RoomPageProps) => {
+  unstable_noStore();
   const room = await getRoom(props.params.roomId);
 
   if (!room) {

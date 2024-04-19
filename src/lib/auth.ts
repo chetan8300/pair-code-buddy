@@ -5,9 +5,9 @@ import { db } from "@/db"
 import { NextAuthOptions, getServerSession } from "next-auth";
 
 export const authConfig: NextAuthOptions = {
-  // session: {
-  //   strategy: "jwt",
-  // },
+  session: {
+    strategy: "jwt",
+  },
   adapter: DrizzleAdapter(db) as Adapter,
   providers: [
     GoogleProvider({
@@ -16,26 +16,54 @@ export const authConfig: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // async jwt({ token, user }) {
-    //   const dbUser = await db.query.users.findFirst({
-    //     where: (users, { eq }) => eq(users.email, token.email!)
-    //   });
+    // // async jwt({ token, user }) {
+    // //   const dbUser = await db.query.users.findFirst({
+    // //     where: (users, { eq }) => eq(users.email, token.email!)
+    // //   });
 
-    //   if (!dbUser) {
-    //     throw new Error("User not found");
+    // //   if (!dbUser) {
+    // //     throw new Error("User not found");
+    // //   }
+
+    // //   token.sub = dbUser.id;
+
+    // //   return token;
+    // // },
+    // async session({ session, token, user }) {
+    //   if (user && session?.user) {
+    //     session.user.id = user.id;
     //   }
 
-    //   token.sub = dbUser.id;
+    //   return session;
+    // }
+    async jwt({ token, user }) {
+      const dbUser = await db.query.users.findFirst({
+        where: (users, { eq }) => eq(users.email, token.email!),
+      });
 
-    //   return token;
-    // },
-    async session({ session, token, user }) {
-      if (user && session?.user) {
-        session.user.id = user.id;
+      if (!dbUser) {
+        throw new Error("no user with email found");
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        picture: dbUser.image,
+      };
+    },
+    async session({ token, session }) {
+      if (token) {
+        session.user = {
+          id: token.sub as string,
+          name: token.name,
+          email: token.email,
+          image: token.picture,
+        };
       }
 
       return session;
-    }
+    },
   }
 }
 

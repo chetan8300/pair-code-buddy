@@ -37,7 +37,6 @@ export function SearchBar() {
 
   React.useEffect(() => {
     form.setValue("search", search ?? "")
-    console.log(search)
     if (search && search !== "") {
       setShowClear(true)
     } else {

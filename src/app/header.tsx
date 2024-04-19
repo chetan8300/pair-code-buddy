@@ -25,9 +25,10 @@ import Link from "next/link"
 function AccountDropdown() {
   const session = useSession();
   const [isSigningIn, setIsSigningIn] = useState(false)
+  const isLoggedIn = session.data;
 
   return (
-    !session.data ? (
+    !isLoggedIn ? (
       <Button
         onClick={() => {
           setIsSigningIn(true)
@@ -79,9 +80,10 @@ function AccountDropdown() {
 
 const Header = () => {
   const session = useSession();
+  const isLoggedIn = session.data;
 
   return (
-    <header className="bg-gray-100 dark:bg-gray-900 py-4">
+    <header className="bg-gray-100 dark:bg-gray-900 py-4 relative z-10">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="flex items-center gap-3 hover:text-blue-900 dark:hover:text-blue-100">
           <Image src="/logo.png" width={50} height={50} alt="Logo" />
@@ -89,8 +91,11 @@ const Header = () => {
         </Link>
 
         <nav className="flex gap-4">
-          {session.data && (
-            <Link href="/my-rooms" className="hover:text-blue-900 dark:hover:text-blue-100">My Rooms</Link>
+          {isLoggedIn && (
+            <>
+              <Link href="/browse" className="hover:text-blue-900 dark:hover:text-blue-100">Browse</Link>
+              <Link href="/my-rooms" className="hover:text-blue-900 dark:hover:text-blue-100">My Rooms</Link>
+            </>
           )}
         </nav>
 
